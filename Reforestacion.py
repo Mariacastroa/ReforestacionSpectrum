@@ -5,25 +5,24 @@ import unicodedata
 from datetime import date, datetime
 
 import folium
-from folium.plugins import Draw, FullScreen
+try:
+    from folium.plugins import Draw, Fullscreen as FullScreen
+except ImportError:
+    from folium.plugins import Draw, FullScreen
 import requests
 import streamlit as st
 from streamlit_folium import st_folium
 from shapely.geometry import shape, Polygon, GeometryCollection, mapping
 from shapely.ops import unary_union
 
-# ==========================================
 # CONFIGURACIÓN DE LA PÁGINA
-# ==========================================
 st.set_page_config(
     page_title="Reforestación Spectrum",
     page_icon="🌳",
     layout="wide"
 )
 
-# ==========================================
 # CONSTANTES Y DATOS DE IMPACTO
-# ==========================================
 tree_impact_data = {
     "Pino": 9,
     "Ciprés": 8,
@@ -122,9 +121,7 @@ ORDEN_SECTORES_SYNERGY = [
     "C10", "Amenities", "Solar Park",
 ]
 
-# ==========================================
 # FUNCIONES MATEMÁTICAS Y GEOGRÁFICAS
-# ==========================================
 RADIO_TIERRA_M = 6_371_008.8
 
 def calcular_area_anillo_m2(coordenadas):
@@ -216,9 +213,7 @@ def cargar_zonas_arcgis():
     except Exception:
         return {"type": "FeatureCollection", "features": []}, {}
 
-# ==========================================
 # INICIALIZACIÓN DE ESTADO
-# ==========================================
 if "proyectos" not in st.session_state:
     st.session_state.proyectos = []
 
@@ -228,7 +223,7 @@ geojson_zonas, zone_lookup = cargar_zonas_arcgis()
 # ==========================================
 # INTERFAZ DE USUARIO (STREAMLIT)
 # ==========================================
-st.title("🌳 Reforestación Spectrum — Prototipo")
+st.title("Reforestación Spectrum")
 st.caption("Prototipo de seguimiento y comparación territorial por María José Castro")
 
 # Panel Superior de Métricas
@@ -284,13 +279,13 @@ with col_form:
             area_dibujada_m2 = calcular_area_geometria_m2(poligono_dibujado)
 
     if area_dibujada_m2 > 0:
-        st.success(f"✏️ Área dibujada en mapa: **{area_dibujada_m2:,.1f} m²**")
+        st.success(f"Área dibujada en mapa: **{area_dibujada_m2:,.1f} m²**")
         area_final_m2 = area_dibujada_m2
     else:
-        st.caption("ℹ️ Dibuja un polígono en el mapa para usar el área exacta dibujada, o se usará la estimación por árboles.")
+        st.caption("Dibuja un polígono en el mapa para usar el área exacta dibujada, o se usará la estimación por árboles.")
         area_final_m2 = total_est_m2
 
-    if st.button("🚀 Guardar Proyecto", type="primary", use_container_width=True):
+    if st.button("Guardar Proyecto", type="primary", use_container_width=True):
         if total_cant_arboles == 0:
             st.error("Debes ingresar al menos 1 árbol.")
         else:
@@ -309,7 +304,7 @@ with col_form:
             st.rerun()
 
 with col_mapa:
-    st.subheader("🗺️ Mapa Interactivo")
+    st.subheader("Mapa Interactivo")
     
     # Crear Mapa base Folium (centrado en Ciudad de Guatemala)
     m = folium.Map(location=[14.634915, -90.506882], zoom_start=11, tiles="OpenStreetMap")
@@ -356,9 +351,7 @@ with col_mapa:
     if output_map and output_map.get("all_drawings"):
         st.session_state.drawn_shapes = output_map["all_drawings"]
 
-# ==========================================
 # SECCIÓN DE REPORTES Y PROYECTOS REGISTRADOS
-# ==========================================
 st.divider()
 st.subheader("📋 Proyectos Registrados")
 
@@ -366,7 +359,7 @@ if not st.session_state.proyectos:
     st.info("Aún no hay proyectos registrados.")
 else:
     for idx, p in enumerate(st.session_state.proyectos):
-        with st.expander(f"🌲 {p['nombre']} — {p['ubicacion']} ({p['fecha']})"):
+        with st.expander(f" {p['nombre']} — {p['ubicacion']} ({p['fecha']})"):
             c1, c2 = st.columns(2)
             c1.write(f"**Área Reforestada:** {p['area_m2']:,.1f} m²")
             c1.write(f"**Total Árboles:** {p['total_arboles']}")
