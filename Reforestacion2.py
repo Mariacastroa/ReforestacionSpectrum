@@ -1,9 +1,4 @@
-"""Spectrum | Plataforma de Seguimiento de Reforestación.
-
-Migración del prototipo de Jupyter/ipyleaflet a Streamlit/Folium.
-La aplicación funciona sin backend: los proyectos se conservan durante la
-sesión activa del usuario mediante ``st.session_state``.
-"""
+"""Spectrum | Prototipo de Plataforma de Seguimiento de Reforestación. Maria Jose Castro """
 
 from __future__ import annotations
 
@@ -25,9 +20,7 @@ from shapely.ops import unary_union
 from streamlit_folium import st_folium
 
 
-# -----------------------------------------------------------------------------
 # CONFIGURACIÓN GENERAL
-# -----------------------------------------------------------------------------
 st.set_page_config(
     page_title="Reforestación Spectrum",
     page_icon="🌳",
@@ -86,9 +79,7 @@ st.markdown(
 )
 
 
-# -----------------------------------------------------------------------------
 # CONSTANTES
-# -----------------------------------------------------------------------------
 TREE_IMPACT_DATA = {
     "Pino": 9,
     "Ciprés": 8,
@@ -207,9 +198,7 @@ ORDEN_SECTORES_SYNERGY = [
 RADIO_TIERRA_M = 6_371_008.8
 
 
-# -----------------------------------------------------------------------------
 # FECHAS Y FASES
-# -----------------------------------------------------------------------------
 def convertir_a_fecha(valor: Any) -> date:
     if isinstance(valor, datetime):
         return valor.date()
@@ -276,9 +265,7 @@ def formatear_fecha(fecha_proyecto: Any) -> str:
     return convertir_a_fecha(fecha_proyecto).strftime("%d/%m/%Y")
 
 
-# -----------------------------------------------------------------------------
 # GEOMETRÍA Y ÁREAS
-# -----------------------------------------------------------------------------
 def calcular_area_anillo_m2(coordenadas: list[list[float]]) -> float:
     if not coordenadas or len(coordenadas) < 3:
         return 0.0
@@ -351,9 +338,7 @@ def feature_bounds(feature: dict[str, Any] | None) -> list[list[float]] | None:
         return None
 
 
-# -----------------------------------------------------------------------------
 # CARGA DE ZONAS DE CIUDAD DE GUATEMALA
-# -----------------------------------------------------------------------------
 def normalizar_texto(texto: Any) -> str:
     texto = str(texto).strip()
     texto = unicodedata.normalize("NFKD", texto)
@@ -600,9 +585,7 @@ def cargar_zonas_ciudad_guatemala() -> tuple[dict[str, Any], dict[str, Any], str
         return {"type": "FeatureCollection", "features": []}, {}, str(error)
 
 
-# -----------------------------------------------------------------------------
 # SECTORES SYNERGY
-# -----------------------------------------------------------------------------
 def convertir_pixel_a_coordenada_synergy(x: float, y: float) -> tuple[float, float]:
     t = TRANSFORMACION_SYNERGY
     longitud = t["lon_x"] * x + t["lon_y"] * y + t["lon_c"]
@@ -645,9 +628,7 @@ GEOJSON_ZONAS, ZONE_LOOKUP, ERROR_ZONAS = cargar_zonas_ciudad_guatemala()
 ZONE_NAMES = sorted(ZONE_LOOKUP, key=lambda nombre: int(nombre.split()[-1]))
 
 
-# -----------------------------------------------------------------------------
 # DATOS DEL FORMULARIO Y ESTADO
-# -----------------------------------------------------------------------------
 def dataframe_arboles_inicial() -> pd.DataFrame:
     return pd.DataFrame([{"Especie": "Pino", "Cantidad": 100}])
 
@@ -713,9 +694,7 @@ def resetear_todo() -> None:
 inicializar_estado()
 
 
-# -----------------------------------------------------------------------------
 # FUNCIONES DE PROYECTOS Y VALIDACIÓN
-# -----------------------------------------------------------------------------
 def consolidar_arboles(editor: pd.DataFrame) -> list[dict[str, Any]]:
     acumulado: dict[str, int] = {}
     orden: list[str] = []
@@ -831,9 +810,7 @@ def eliminar_proyecto(numero: int) -> None:
     st.session_state.map_nonce += 1
 
 
-# -----------------------------------------------------------------------------
 # MAPA
-# -----------------------------------------------------------------------------
 def bounds_ambas_areas() -> list[list[float]]:
     geometrias = [GEOMETRIA_SYNERGY_TOTAL]
     if GEOJSON_ZONAS.get("features"):
@@ -1047,9 +1024,7 @@ def sincronizar_dibujo(resultado_mapa: dict[str, Any] | None) -> None:
         st.session_state.pending_area_m2 = area
 
 
-# -----------------------------------------------------------------------------
 # COMPARACIÓN TERRITORIAL Y EXPORTACIÓN
-# -----------------------------------------------------------------------------
 def calcular_superficie_construida() -> dict[str, dict[str, float]]:
     return {
         categoria: {"manzanas": manzanas, "m2": manzanas * M2_POR_MANZANA}
@@ -1169,13 +1144,12 @@ def proyecto_a_geojson_feature(proyecto: dict[str, Any]) -> dict[str, Any]:
     return feature
 
 
-# -----------------------------------------------------------------------------
+
 # INTERFAZ
-# -----------------------------------------------------------------------------
 st.markdown(
     """
     <div class="spectrum-header">
-        <h1>🌳 Reforestación Spectrum</h1>
+        <h1> Reforestación Spectrum</h1>
         <p>Plataforma de seguimiento territorial · Ciudad de Guatemala y Synergy</p>
     </div>
     """,
