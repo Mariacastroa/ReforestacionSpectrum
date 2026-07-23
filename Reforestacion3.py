@@ -2053,9 +2053,5 @@ else:
 
 st.markdown(
     "<div class='small-note' style='margin-top:1.5rem;'>"
-    "Prototipo de seguimiento ambiental Spectrum. Los límites de Synergy son aproximados; "
-    "para precisión catastral deben sustituirse por un KML/KMZ o GeoJSON oficial. "
-    "El balance arbóreo es un indicador operativo y no representa por sí solo una compensación "
-    "de carbono, biodiversidad o impacto ambiental.</div>",
     unsafe_allow_html=True,
 )
