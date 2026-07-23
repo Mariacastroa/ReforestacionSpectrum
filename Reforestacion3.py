@@ -1,11 +1,4 @@
-"""Spectrum | Plataforma de Seguimiento de Reforestación.
-
-Versión ampliada con:
-- Proyectos de reforestación.
-- Inventario actual de viveros.
-- Registro de árboles talados.
-- Balance arbóreo de gestión.
-"""
+"""Spectrum | Prototipo por Maria Jose Castro """
 
 from __future__ import annotations
 
@@ -1366,7 +1359,7 @@ st.markdown(
     """
     <div class="spectrum-header">
         <h1>Reforestación Spectrum</h1>
-        <p>Plataforma de seguimiento territorial, viveros y balance arbóreo</p>
+        <p>Plataforma de registro y seguimiento de reforestación, viveros y deforestación </p>
     </div>
     """,
     unsafe_allow_html=True,
@@ -1382,7 +1375,7 @@ if st.session_state.flash_message:
     st.toast(st.session_state.flash_message)
     st.session_state.flash_message = ""
 
-with st.expander("Cómo utilizar la plataforma", expanded=False):
+with st.expander("¿Cómo utilizar la plataforma?", expanded=False):
     st.markdown(
         "**Reforestación:** selecciona la zona o sector, dibuja el área real, registra especies, cantidades y fecha.  "
         "\n\n**Viveros:** registra el inventario actual por especie. Si vuelves a guardar un vivero con el mismo nombre, su inventario se actualiza en lugar de duplicarse.  "
@@ -1583,7 +1576,7 @@ with col_form:
 # VIVEROS Y TALA
 st.divider()
 st.subheader("Gestión de viveros y tala")
-tab_vivero, tab_tala = st.tabs(["🌱 Inventario de viveros", "🪓 Registro de tala"])
+tab_vivero, tab_tala = st.tabs(["Inventario de viveros", "Registro deforestación"])
 
 with tab_vivero:
     st.markdown("### Registrar o actualizar vivero")
