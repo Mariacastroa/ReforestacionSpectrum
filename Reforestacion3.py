@@ -1381,7 +1381,6 @@ with st.expander("¿Cómo utilizar la plataforma?", expanded=False):
         "\n\n**Viveros:** registra el inventario actual por especie. Si vuelves a guardar un vivero con el mismo nombre, su inventario se actualiza en lugar de duplicarse.  "
         "\n\n**Tala:** registra los árboles removidos por construcción, incluyendo la obra, ubicación, motivo y permiso.  "
         "\n\n**Balance:** árboles plantados + árboles disponibles en viveros − árboles talados. "
-        "Los árboles de vivero no se suman al área reforestada porque todavía no han sido plantados."
     )
 
 # Métricas acumuladas superiores
