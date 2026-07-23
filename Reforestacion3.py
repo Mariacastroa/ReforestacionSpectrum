@@ -2052,6 +2052,6 @@ else:
             )
 
 st.markdown(
-    "<div class='small-note' style='margin-top:1.5rem;'>"
+    "<div class='small-note' style='margin-top:1.5rem;'>",
     unsafe_allow_html=True,
 )
