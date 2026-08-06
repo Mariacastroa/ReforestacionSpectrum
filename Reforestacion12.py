@@ -615,7 +615,7 @@ ZONAS_VALIDAS = [
 AREAS_GENERALES = [
     "Ciudad de Guatemala",
     "Synergy",
-    "Propiedades",
+    "Otro",
 ]
 
 # Coordenadas puntuales de referencia para propiedades Spectrum.
